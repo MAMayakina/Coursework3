@@ -3,14 +3,11 @@ package com.skypro.coursework3.service;
 import com.skypro.coursework3.model.Question;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
-    Map<Integer, Question> questions = new HashMap<>();
+    public Set<Question> questions = new HashSet<>();
     private int count = 0;
 
     public Question add(String question, String answer) {
@@ -20,14 +17,14 @@ public class JavaQuestionService implements QuestionService {
             throw new IllegalArgumentException("Введите вопрос и ответ");
         }
 
-        questions.put(count, newQuestion);
+        questions.add(newQuestion);
         count++;
 
         return newQuestion;
     }
 
     public Question remove(String question) {
-        for (Question value : questions.values()) {
+        for (Question value : questions) {
             if (value.getQuestion().equals(question)) {
                 questions.remove(value);
                 count--;
@@ -38,11 +35,20 @@ public class JavaQuestionService implements QuestionService {
     }
 
     public Collection<Question> getAll() {
-        return questions.values();
+        return questions;
     }
 
     public Question getRandomQuestion() {
+        if (count == 0) {
+            throw new RuntimeException("В базе нет вопросов");
+        }
         Random random = new Random();
-        return questions.get(random.nextInt(count));
+        int i=0;
+        for (Question question : questions) {
+            if(i==random.nextInt(count)){
+                return question;
+            }
+        }
+        throw new RuntimeException("Нет такого вопроса");
     }
 }

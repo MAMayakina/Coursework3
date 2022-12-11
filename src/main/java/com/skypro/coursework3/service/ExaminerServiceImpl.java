@@ -3,7 +3,6 @@ package com.skypro.coursework3.service;
 import com.skypro.coursework3.model.Question;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,10 +16,10 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     Set<Question> examinerQuestion;
 
-    public Collection<Question> getQuestion(int amount) {
-        if (amount > javaQuestionService.questions.size()) {
+    public Set<Question> getQuestion(int amount) {
+       /* if (amount > javaQuestionService.questions.size()) {
             throw new IllegalArgumentException("Введенное число превышает количество существующих вопросов");
-        }
+        }*/
         examinerQuestion = new HashSet<>();
         while (examinerQuestion.size() < amount) {
             examinerQuestion.add(javaQuestionService.getRandomQuestion());
