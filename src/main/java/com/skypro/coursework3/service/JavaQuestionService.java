@@ -11,7 +11,7 @@ import java.util.Random;
 @Service
 public class JavaQuestionService implements QuestionService {
     Map<Integer, Question> questions = new HashMap<>();
-    private int count = 1;
+    private int count = 0;
 
     public Question add(String question, String answer) {
         Question newQuestion = new Question(question, answer);
@@ -27,22 +27,14 @@ public class JavaQuestionService implements QuestionService {
     }
 
     public Question remove(String question) {
-        Question removeQuestion = null;
-
         for (Question value : questions.values()) {
             if (value.getQuestion().equals(question)) {
-                removeQuestion = value;
+                questions.remove(value);
+                count--;
+                return value;
             }
         }
-
-        if (removeQuestion.getQuestion() == null) {
-            throw new RuntimeException("Такого вопроса нет");
-        }
-
-        questions.remove(removeQuestion);
-        count--;
-
-        return removeQuestion;
+        throw new RuntimeException("Такого вопроса нет");
     }
 
     public Collection<Question> getAll() {
