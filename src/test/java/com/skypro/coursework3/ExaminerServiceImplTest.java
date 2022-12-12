@@ -45,7 +45,7 @@ public class ExaminerServiceImplTest {
         actualQuestions.add(question3);
         actualQuestions.add(question4);
 
-        when(javaQuestionService.getRandomQuestion()).thenReturn(actualQuestions.get((int)(Math.random()* (actualQuestions.size()-1))));
+        when(javaQuestionService.getRandomQuestion()).thenReturn(question1,question2,question3,question4);
     }
 
     @ParameterizedTest
